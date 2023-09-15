@@ -2,6 +2,7 @@
 An application to show description of movies and TV Shows 
 
 #Journey
+
 Started with the documentation of WatchMode api 
 Decided what to integerate and What not 
 Its an easy task but contains a lot of work to be done
