@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">MovieApp</string>
+    <string name="watchmode">WatchMode</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_special">TV Special</string>
+    <string name="movies">Movies</string>
+    <string name="tv_shows">Tv Shows</string>
+    <string name="source_ott">Source Ott</string>
+    <string name="about">About</string>
+    <string name="about_Watch_mode_api"><![CDATA[Welcome to Watchmode\'s API! Watchmode is the most complete
+    API for finding out what movies & shows are available on each streaming service, as well as many other useful
+    features built for creating applications built around movies & shows. You can use this API to access all our API endpoints,
+     such as the Title API to get details on a specific title, or the List Titles API to get a listing of movies & shows that match
+     a certain criteria.]]></string>
+    <string name="home">Home</string>
+    <string name="details">Details</string>
+    <string name="favourites">Favourites</string>
+    <string name="Releasedtae">Release Date :</string>
+</resources>
