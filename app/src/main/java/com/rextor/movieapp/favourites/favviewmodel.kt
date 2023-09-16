@@ -24,7 +24,10 @@ class favviewmodel @Inject constructor(
     init {
         getlist()
     }
-    var _listoffav = MutableStateFlow<List<favouriteEntity>>(emptyList())
+    var _listoffav = MutableStateFlow<List<favouriteEntity>>(
+        listOf( favouriteEntity(
+        id = "", type ="" , release_date = "", original_title ="" ,
+    )))
     val listoffav : StateFlow<List<favouriteEntity>>
         get() = _listoffav
 

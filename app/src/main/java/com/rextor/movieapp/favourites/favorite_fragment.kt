@@ -1,10 +1,12 @@
 package com.rextor.movieapp.favourites
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,6 +21,8 @@ import com.rextor.movieapp.databinding.FragmentFavoriteFragmentBinding
 import com.rextor.movieapp.databinding.FragmentMoviesListFragmentBinding
 import com.rextor.movieapp.movies.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -28,7 +32,7 @@ class favorite_fragment : Fragment() {
     private var _binding : FragmentFavoriteFragmentBinding?= null
     val binding
         get() = _binding
-
+    var job:Job? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         CurrentPosition._positions.value = Positions.FAVOURITES
@@ -72,11 +76,16 @@ class favorite_fragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = adaptor
         }
-        lifecycleScope.launch (coroutineexceptionhandler.coroutineExceptionHandler){
+         job = lifecycleScope.launch (coroutineexceptionhandler.coroutineExceptionHandler){
             viewModel.listoffav.collectLatest {
                 if (it.isNotEmpty()){
                     binding?.progressBarfav?.visibility  = View.INVISIBLE
                     adaptor.submitList(it)
+                }else{
+                        Toast.makeText(context, "No Favourites", Toast.LENGTH_SHORT).show()
+                        findNavController().navigateUp()
+
+
                 }
 
             }
@@ -87,8 +96,14 @@ class favorite_fragment : Fragment() {
         super.onResume()
         CurrentPosition._positions.value = Positions.FAVOURITES
     }
+
+    override fun onPause() {
+        super.onPause()
+        job?.cancel()
+    }
     override fun onDestroy() {
         super.onDestroy()
         _binding=null
+        job?.cancel()
     }
 }

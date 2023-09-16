@@ -38,9 +38,11 @@ class favAdaptor(private val to_Detail_Screen: (List<String>) -> Unit) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        with(holder) {
-            titleView.text = item.original_title
-            year.text = item.release_date
+        if (item.id.isNotBlank()) {
+            with(holder) {
+                titleView.text = item.original_title
+                year.text = item.release_date
+            }
         }
     }
 

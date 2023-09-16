@@ -29,9 +29,10 @@ class MainActivity : AppCompatActivity() {
         val backPress = findViewById<ImageButton>(R.id.backPress)
         backPress.setOnClickListener {
 //            Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show()
-            findNavController(
-                viewId = R.id.fragmentContainerView
-            ).navigateUp()
+            onBackPressed()
+//            findNavController(
+//                viewId = R.id.fragmentContainerView
+//            ).navigateUp()
         }
         job= coroutineScope.launch {
             CurrentPosition.positions.collectLatest {
