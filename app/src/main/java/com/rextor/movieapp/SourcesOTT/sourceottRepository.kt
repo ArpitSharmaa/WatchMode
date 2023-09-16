@@ -1,5 +1,6 @@
 package com.rextor.movieapp.SourcesOTT
 
+import com.rextor.movieapp.LocalStrorage.Model.favouriteEntity
 import com.rextor.movieapp.Model.TitleDetails
 import com.rextor.movieapp.Model.Tittles
 import com.rextor.movieapp.Model.listOFOTT
@@ -26,6 +27,14 @@ class sourceottRepository @Inject constructor(
         }else{
             return null
         }
+    }
+
+    override suspend fun getfav(): List<favouriteEntity> {
+        return emptyList()
+    }
+
+    override suspend fun insertfav(favouriteEntity: favouriteEntity) {
+
     }
 
 }

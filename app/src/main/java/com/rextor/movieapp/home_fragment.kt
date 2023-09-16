@@ -56,6 +56,9 @@ class home_fragment : Fragment() {
         binding?.sourceOtt?.setOnClickListener {
             findNavController().navigate(R.id.action_home_fragment_to_sources_ott_fragment)
         }
+        binding?.buttonfav?.setOnClickListener {
+            findNavController().navigate(R.id.action_home_fragment_to_favorite_fragment)
+        }
 
     }
 

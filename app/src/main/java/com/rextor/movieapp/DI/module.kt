@@ -4,12 +4,15 @@ package com.rextor.movieapp.DI
 
 import android.app.Application
 import android.content.Context
+import androidx.room.Room
 import com.rextor.movieapp.Details.Details_repository
+import com.rextor.movieapp.LocalStrorage.database.database
 import com.rextor.movieapp.Netwrok.NetworkService
 import com.rextor.movieapp.Repository.Repository
 import com.rextor.movieapp.SourcesOTT.sourceottRepository
 import com.rextor.movieapp.TVshows.tv_ShowRepository
 import com.rextor.movieapp.Utils.coroutineexceptionhandler
+import com.rextor.movieapp.favourites.favrepository
 import com.rextor.movieapp.movies.Movie_list_repository
 import com.rextor.movieapp.tvSpeacial.tvspeacialRepository
 import dagger.Module
@@ -35,6 +38,12 @@ object module {
             .build()
             .create(NetworkService::class.java)
     }
+    @Provides
+    @Singleton
+    fun provudedatabase(context: Context): database {
+
+        return Room.databaseBuilder(context, database::class.java,"favoritedatabase").build()
+    }
 
     @Provides
     @Singleton
@@ -45,28 +54,23 @@ object module {
     @Provides
     @Singleton
     @Named("Movies")
-    fun providemoviesRepository(networkService: NetworkService): Repository {
+    fun providemoviesRepository(networkService: NetworkService,database: database): Repository {
         return Movie_list_repository(
-            ApiServices = networkService
+            ApiServices = networkService,
+            database = database
         )
     }
     @Provides
     @Singleton
     @Named("Details")
-    fun providedetailRepository(networkService: NetworkService):Repository {
+    fun providedetailRepository(networkService: NetworkService,database: database):Repository {
         return Details_repository(
-            networkService = networkService
+            networkService = networkService,
+            database = database
         )
     }
 
-    @Provides
-    @Singleton
-    @Named("TvShow")
-    fun providetvshowrepository(networkService: NetworkService):Repository{
-        return tv_ShowRepository(
-             networkService
-        )
-    }
+
 
     @Provides
     @Singleton
@@ -91,5 +95,23 @@ object module {
         return coroutineexceptionhandler(
             context = context
         )
+    }
+
+
+    @Provides
+    @Singleton
+    @Named("TvShow")
+    fun providetvshowrepository(networkService: NetworkService,database: database):Repository{
+        return tv_ShowRepository(
+            networkService,
+            database = database
+        )
+    }
+
+    @Provides
+    @Singleton
+    @Named("room")
+    fun providefavrouiterepository(database: database):Repository{
+        return favrepository(database)
     }
 }

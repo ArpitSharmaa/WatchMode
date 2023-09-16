@@ -1,7 +1,10 @@
 package com.rextor.movieapp.Details
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rextor.movieapp.LocalStrorage.Model.favouriteEntity
 import com.rextor.movieapp.Model.TitleDetails
 import com.rextor.movieapp.Model.Type
 import com.rextor.movieapp.Repository.Repository
@@ -18,7 +21,8 @@ import javax.inject.Named
 class DetailViewModel @Inject constructor(
     @Named("Details")
     private val repository: Repository,
-    private val coroutineexceptionhandler: coroutineexceptionhandler
+    private val coroutineexceptionhandler: coroutineexceptionhandler,
+    context: Context
 ):ViewModel(){
     var _details = MutableStateFlow<TitleDetails?>(null)
     val details : StateFlow<TitleDetails?>
@@ -32,6 +36,11 @@ class DetailViewModel @Inject constructor(
             if (result.await()!=null){
                 _details.emit(result.await())
             }
+        }
+    }
+    fun insertfav(favouriteEntity: favouriteEntity){
+        viewModelScope.launch (coroutineexceptionhandler.coroutineExceptionHandler){
+            repository.insertfav(favouriteEntity)
         }
     }
 }

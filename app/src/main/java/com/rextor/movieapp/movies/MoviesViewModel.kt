@@ -4,6 +4,7 @@ package com.rextor.movieapp.movies
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rextor.movieapp.LocalStrorage.Model.favouriteEntity
 import com.rextor.movieapp.Model.Tittles
 import com.rextor.movieapp.Model.Type
 import com.rextor.movieapp.Repository.Repository
@@ -47,5 +48,11 @@ class MoviesViewModel @Inject constructor(
 
         }
 
+    }
+
+    fun insertfav(favouriteEntity: favouriteEntity){
+        viewModelScope.launch (coroutineexceptionhandler.coroutineExceptionHandler){
+            repository.insertfav(favouriteEntity)
+        }
     }
 }

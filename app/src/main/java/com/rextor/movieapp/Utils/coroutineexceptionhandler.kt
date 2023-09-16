@@ -1,6 +1,7 @@
 package com.rextor.movieapp.Utils
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -11,5 +12,6 @@ class coroutineexceptionhandler @Inject constructor(
 ) {
     val coroutineExceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         Toast.makeText(context, throwable.localizedMessage, Toast.LENGTH_SHORT).show()
+//        Log.e("TAG", "msg: $throwable", )
     }
 }

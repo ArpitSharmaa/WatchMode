@@ -19,6 +19,7 @@ import androidx.core.content.PackageManagerCompat
 
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.rextor.movieapp.LocalStrorage.Model.favouriteEntity
 import com.rextor.movieapp.Model.TitleDetails
 import com.rextor.movieapp.R
 import com.rextor.movieapp.Utils.CurrentPosition
@@ -68,6 +69,7 @@ class details_fragment : Fragment() {
         binding?.view?.visibility = View.INVISIBLE
         binding?.plotTitle?.visibility = View.INVISIBLE
         binding?.mediaPlay?.visibility = View.INVISIBLE
+        binding?.favbutton?.visibility = View.INVISIBLE
         val coroutineexceptionhandler = coroutineexceptionhandler(requireContext())
         lifecycleScope.launch (coroutineexceptionhandler.coroutineExceptionHandler){
             viewModel.details.collectLatest {
@@ -97,12 +99,22 @@ class details_fragment : Fragment() {
 //                Toast.makeText(context, "No application to play the video", Toast.LENGTH_SHORT).show()
 //            }
         }
+        binding?.favbutton?.setOnClickListener {
+            viewModel.insertfav(favouriteEntity(
+                id = titleDetails.id,
+                type = titleDetails.type,
+                release_date = titleDetails.release_date,
+                original_title = titleDetails.original_title
+            ))
+            Toast.makeText(context, "Added To Favorite", Toast.LENGTH_SHORT).show()
+        }
 
 
 
     }
 
     private fun setbindings(titleDetails: TitleDetails) {
+        binding?.favbutton?.visibility = View.VISIBLE
         binding?.progressBardetailScreen?.visibility  = View.INVISIBLE
         binding?.titleDetails?.text  = titleDetails.original_title
         Glide.with(requireContext()).load(titleDetails.backdrop).into(binding?.backdrop!!)
